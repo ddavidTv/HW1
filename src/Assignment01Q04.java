@@ -5,30 +5,18 @@ public class Assignment01Q04 {
     public static int[] shiftArrayCyclic(int[] array, int move, char direction) {
         // TODO: implement
 
-        if(array.length == 0 ){
-            if(array.length==0) return array;
-        }
-        else if (Math.abs(move) == array.length) {
-            return array;
-        } else if (move < 0) {
-            if (direction == 'R') { direction = 'L'; }
-            else if (direction == 'L') { direction = 'R'; }
-            move = -move;
-        }
+        if (array.length == 0){ return array; }
+        
+        if (Math.abs(move) == array.length) { return array; } 
 
-        // move > 0:
-        if (direction == 'R') {
-            for (int m = 0; m < move; m++) {
-                int last = array[array.length - 1];
-                for (int i = array.length - 1; i > 0; i--) { array[i] = array[i - 1]; }
-                array[0] = last;
-            }
-        }
-        else if (direction == 'L') {
-            for (int m = 0; m < move; m++) {
-                int first = array[0];
-                for (int i = 1 ; i < array.length; i++) { array[i - 1] = array[i]; }
-                array[array.length-1] = first;
+        if (direction == 'R' || direction == 'L') {
+            if (direction == 'L') { move = -move; }
+            move = move % array.length;
+            int[] tempArray = new int[array.length];
+            System.arraycopy(array, 0, tempArray, 0, array.length);
+        
+            for(int i = 0 ;i < array.length ; i++){
+                array[(i + move + array.length) % array.length] = tempArray[i];
             }
         }
         return array;
@@ -36,9 +24,9 @@ public class Assignment01Q04 {
 
     public static void main(String[] args) {
         System.out.println(Arrays.toString(
-        shiftArrayCyclic(new int[]{1, 2, 3, 4, 5}, -1, 'R'))); // [2, 3, 4, 5, 1]
+        shiftArrayCyclic(new int[]{1, 2, 3, 4, 5}, -1, 'R'))); // [2, 3, 4, 5, 1] 
         System.out.println(Arrays.toString(
-        shiftArrayCyclic(new int[] { 1, 2, 3, 4, 5 }, 1, 'R'))); // [5, 1, 2, 3, 4]
+        shiftArrayCyclic(new int[] { 1, 2, 3, 4, 5 }, 1, 'R'))); // [5, 1, 2, 3, 4] 
         System.out.println(Arrays.toString(
         shiftArrayCyclic(new int[]{1, 2, 3, 4, 5}, 1, 'r'))); // [1, 2, 3, 4, 5]
         System.out.println(Arrays.toString(
