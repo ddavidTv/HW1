@@ -3,20 +3,23 @@ import java.util.Arrays;
 public class Assignment01Q04 {
 
     public static int[] shiftArrayCyclic(int[] array, int move, char direction) {
-        // TODO: implement
 
-        if (array.length == 0){ return array; }
-        
-        if (Math.abs(move) == array.length) { return array; } 
+        if (array.length == 0 || (Math.abs(move) % array.length) == 0) { return array; } 
 
         if (direction == 'R' || direction == 'L') {
-            if (direction == 'L') { move = -move; }
-            move = move % array.length;
+
+            move %= array.length; // Now move is smaller than array.length
+            // We update move to correspond direction='R' with move > 0:  
+            if (direction == 'L' && move < 0) move = -move;
+            else if (direction == 'R' && move < 0) move = array.length + move; 
+            else if (direction == 'L' && move > 0) move = array.length - move;  
+            
             int[] tempArray = new int[array.length];
             System.arraycopy(array, 0, tempArray, 0, array.length);
-        
+            
+            // We move the items cyclically with direction='R' && move>0 
             for(int i = 0 ;i < array.length ; i++){
-                array[(i + move + array.length) % array.length] = tempArray[i];
+                array[(i + move) % array.length] = tempArray[i];
             }
         }
         return array;

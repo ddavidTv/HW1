@@ -1,8 +1,8 @@
 
 public class Assignment01Q05 {
     public static int findShortestPath(int[][] m, int i, int j) {
-        // TODO: implement
 
+            // We implememnt BFS algorithm for node i
             int []Queue = new int[m.length];
             int qStart, qEnd; //indexs position at queue  
             int []dists = new int[m.length]; //distances from the source.
